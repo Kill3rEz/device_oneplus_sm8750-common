@@ -324,6 +324,7 @@ PRODUCT_PACKAGES += \
     NcmTetheringOverlay \
     OPlusFrameworksResCommon \
     OPlusSettingsResCommon \
+    OPlusSystemUIResCommon \
     WifiResTarget
 
 ifneq ($(TARGET_IS_TABLET),true)
