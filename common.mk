@@ -581,6 +581,7 @@ $(call soong_config_set_bool,recovery,target_recovery_uses_qti_drm,true)
 # Sensors
 PRODUCT_PACKAGES += \
     android.hardware.sensors-service.oplus-multihal \
+    vendor.lineage.oplus_als.service \
     sensors.dynamic_sensor_hal \
     sensors.qsh_wrapper
 
