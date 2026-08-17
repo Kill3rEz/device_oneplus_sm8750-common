@@ -195,7 +195,10 @@
     },
     {
       "Name": "LLCCBWHystTriggerCount",
-      "Path": "/sys/devices/system/cpu/bus_dcvs/LLCC/240b3400.qcom,bwmon-llcc-gold/hyst_trigger_count",
+      "Paths": [
+        "/sys/devices/system/cpu/bus_dcvs/LLCC/240b3400.qcom,bwmon-llcc-gold/hyst_trigger_count",
+        "/sys/devices/system/cpu/bus_dcvs/LLCC/240b7400.qcom,bwmon-llcc-prime/hyst_trigger_count"
+      ],
       "Values": [
         "0",
         "3"
@@ -204,7 +207,10 @@
     },
     {
       "Name": "LLCCBWHistMemory",
-      "Path": "/sys/devices/system/cpu/bus_dcvs/LLCC/240b3400.qcom,bwmon-llcc-gold/hist_memory",
+      "Paths": [
+        "/sys/devices/system/cpu/bus_dcvs/LLCC/240b3400.qcom,bwmon-llcc-gold/hist_memory",
+        "/sys/devices/system/cpu/bus_dcvs/LLCC/240b7400.qcom,bwmon-llcc-prime/hist_memory"
+      ],
       "Values": [
         "0",
         "20"
@@ -213,10 +219,13 @@
     },
     {
       "Name": "LLCCBWHystLength",
-      "Path": "/sys/devices/system/cpu/bus_dcvs/LLCC/240b3400.qcom,bwmon-llcc-gold/hyst_length",
+      "Paths": [
+        "/sys/devices/system/cpu/bus_dcvs/LLCC/240b3400.qcom,bwmon-llcc-gold/hyst_length",
+        "/sys/devices/system/cpu/bus_dcvs/LLCC/240b7400.qcom,bwmon-llcc-prime/hyst_length"
+      ],
       "Values": [
         "0",
-        "10"
+        "5"
       ],
       "ResetOnInit": true
     },
