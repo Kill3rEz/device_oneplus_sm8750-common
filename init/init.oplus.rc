@@ -24,9 +24,13 @@ on property:ro.boot.prjname=*
     # Display
     setprop ro.separate.soft ${ro.boot.prjname}
 
-on property:sys.boot_completed=1
+# Arm the hint looper only once the QTI post-boot tuning has finished, so
+# libperfmgr is the last writer on the nodes both own (walt rate limits,
+# cluster mins, LLCC hysteresis) instead of racing it on sys.boot_completed.
+on property:vendor.post_boot.parsed=1
     setprop vendor.powerhal.init 1
 
+on property:sys.boot_completed=1
     # Widevine
     copy /vendor/etc/oplus_Widevine_licenses.pfm /mnt/vendor/persist/data/pfm/licenses/oplus_Widevine_licenses.pfm
     chmod 0600 /mnt/vendor/persist/data/pfm/licenses/oplus_Widevine_licenses.pfm
