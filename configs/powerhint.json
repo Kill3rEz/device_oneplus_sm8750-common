@@ -480,6 +480,66 @@
       "Value": "10000"
     },
     {
+      "PowerHint": "GAME_LOADING",
+      "Node": "CPUBigClusterMinFreq",
+      "Duration": 1500,
+      "Value": "3513600"
+    },
+    {
+      "PowerHint": "GAME_LOADING",
+      "Node": "CPULittleClusterMinFreq",
+      "Duration": 1500,
+      "Value": "3532800"
+    },
+    {
+      "PowerHint": "GAME_LOADING",
+      "Node": "UclampTAMin",
+      "Duration": 1500,
+      "Value": "50"
+    },
+    {
+      "PowerHint": "GAME_LOADING",
+      "Node": "UclampFGMin",
+      "Duration": 1500,
+      "Value": "50"
+    },
+    {
+      "PowerHint": "GAME_LOADING",
+      "Node": "LLCCBWHystTriggerCount",
+      "Duration": 1500,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "GAME_LOADING",
+      "Node": "LLCCBWHystLength",
+      "Duration": 1500,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "GAME_LOADING",
+      "Node": "LLCCBWHistMemory",
+      "Duration": 1500,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "GAME_LOADING",
+      "Node": "CPUBWMinFreq",
+      "Duration": 1500,
+      "Value": "3187000"
+    },
+    {
+      "PowerHint": "GAME_LOADING",
+      "Node": "LLCCBWMinFreq",
+      "Duration": 1500,
+      "Value": "1066000"
+    },
+    {
+      "PowerHint": "GAME_LOADING",
+      "Node": "GPUIdleTimer",
+      "Duration": 1500,
+      "Value": "10000"
+    },
+    {
       "PowerHint": "EXPENSIVE_RENDERING",
       "Node": "PowerHALRenderingState",
       "Duration": 0,
