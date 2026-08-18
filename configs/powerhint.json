@@ -367,20 +367,25 @@
     },
     {
       "PowerHint": "INTERACTION",
+      "Type": "DoHint",
+      "Value": "INTERACTION_FLOORS"
+    },
+    {
+      "PowerHint": "INTERACTION_FLOORS",
       "Node": "CPUBWMinFreq",
-      "Duration": 0,
+      "Duration": 500,
       "Value": "1555000"
     },
     {
-      "PowerHint": "INTERACTION",
+      "PowerHint": "INTERACTION_FLOORS",
       "Node": "LLCCBWMinFreq",
-      "Duration": 0,
+      "Duration": 500,
       "Value": "600000"
     },
     {
-      "PowerHint": "INTERACTION",
+      "PowerHint": "INTERACTION_FLOORS",
       "Node": "GPUMinFreq",
-      "Duration": 0,
+      "Duration": 500,
       "Value": "525000000"
     },
     {
