@@ -79,6 +79,7 @@ PRODUCT_PACKAGES += \
     android.hardware.audio.core-V2-ndk.vendor \
     android.hardware.audio.core.sounddose-V1-ndk.vendor \
     android.hardware.audio.core.sounddose-V2-ndk.vendor \
+    android.hardware.audio.effect-V3-ndk.vendor \
     android.media.audio.common.types-V3-ndk.vendor \
     android.media.audio.common.types-V4-ndk.vendor \
     libalsautilsv2.vendor \
@@ -564,6 +565,7 @@ PRODUCT_COPY_FILES += \
 # Power
 PRODUCT_PACKAGES += \
     android.hardware.power-service.lineage-libperfmgr \
+    libperfmgr.vendor \
     libqti-perfd-client
 
 PRODUCT_COPY_FILES += \
