@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<exceptions>
+    <exception package="com.oplus.melody">
+        <permission name="android.permission.BLUETOOTH_CONNECT" fixed="false"/>
+        <permission name="android.permission.BLUETOOTH_SCAN" fixed="false"/>
+    </exception>
+    <exception package="com.heytap.headset">
+        <permission name="android.permission.BLUETOOTH_CONNECT" fixed="false"/>
+        <permission name="android.permission.BLUETOOTH_SCAN" fixed="false"/>
+    </exception>
+</exceptions>

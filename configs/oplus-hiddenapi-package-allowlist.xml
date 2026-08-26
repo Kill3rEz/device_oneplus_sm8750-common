@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- This XML file declares which platform apps that need to access internal APIs. -->
+<!-- Apps that need oplus-fwk members (boot classpath = hidden API unless listed). -->
 <config>
   <hidden-api-whitelisted-app package="com.oplus.consumerIRApp" />
+  <!-- HeyMelody / OP Buds: COUIVersionUtil links OplusBuild.VERSION.SDK_VERSION on launch. -->
+  <hidden-api-whitelisted-app package="com.heytap.headset" />
+  <hidden-api-whitelisted-app package="com.oplus.melody" />
 </config>

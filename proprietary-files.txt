@@ -151,6 +151,9 @@ vendor/lib64/libtaautoload.so
 my_product/del-app/ConsumerIRApp/ConsumerIRApp.apk:product/app/ConsumerIRApp/ConsumerIRApp.apk;PRESIGNED
 my_stock/etc/asl/com.oplus.consumerIRApp-safetyLabel.xml:product/etc/asl/com.oplus.consumerIRApp-safetyLabel.xml
 
+# Melody (OP Buds / Wireless Earphones)
+my_stock/app/Melody/Melody.apk:product/app/Melody/Melody.apk;PRESIGNED
+
 # Diag
 system/lib64/vendor.qti.diaghal-V1-ndk.so
 system_ext/lib64/libdiag_system.so
