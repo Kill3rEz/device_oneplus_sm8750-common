@@ -22,6 +22,8 @@ subsystem adf
 
 # Charger
 /sys/class/oplus_chg/*  mmi_charging_enable    0660    system  system
+# Stock init only chmods normal_cool_down, so cool_down needs this to be writable
+/sys/class/oplus_chg/*  cool_down              0660    system  system
 
 # Display
 firmware_directories /mnt/vendor/persist/display/
