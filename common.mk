@@ -740,7 +740,9 @@ ODM_MANIFEST_FILES := \
 endif
 
 # Virtualization service
-$(call inherit-product, packages/modules/Virtualization/apex/product_packages.mk)
+# PenguinOS/AOSPA: la Virtualization CLO non fornisce apex/product_packages.mk
+# (struttura diversa dall'AOSP/Lineage). AVF non necessario -> disabilitato.
+# $(call inherit-product, packages/modules/Virtualization/apex/product_packages.mk)
 
 # WiFi
 PRODUCT_PACKAGES += \
