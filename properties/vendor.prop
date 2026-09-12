@@ -197,7 +197,11 @@ ro.surface_flinger.has_wide_color_display=true
 ro.surface_flinger.max_frame_buffer_acquired_buffers=3
 ro.surface_flinger.max_virtual_display_dimension=4096
 ro.surface_flinger.protected_contents=true
-ro.surface_flinger.set_display_power_timer_ms?=1000
+# 0: do not power the panel off after a 1s compositor stall. The previous
+# 1000ms value let SF idle drop the display wakelock, which raced kernel
+# s2idle against IPA/QRTR and froze userspace (input ANRs) while the
+# panel was still on. LTPO idle fps still uses set_idle_timer_ms.
+ro.surface_flinger.set_display_power_timer_ms?=0
 ro.surface_flinger.set_idle_timer_ms?=300
 ro.surface_flinger.set_touch_timer_ms?=350
 ro.surface_flinger.use_color_management=true

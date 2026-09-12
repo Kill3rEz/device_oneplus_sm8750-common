@@ -252,6 +252,10 @@ public:
         return mVibratorOL.getPwleCompositionSizeMax(maxSize);
     }
 
+    ndk::ScopedAStatus getResonantFrequency(float* resonantFreqHz) {
+        return mVibratorOL.getResonantFrequency(resonantFreqHz);
+    }
+
     ndk::ScopedAStatus getSupportedBraking(std::vector<Braking>* supported) {
         return mVibratorOL.getSupportedBraking(supported);
     }
@@ -338,8 +342,8 @@ ndk::ScopedAStatus Vibrator::alwaysOnDisable(int32_t id __unused) {
     return ndk::ScopedAStatus(AStatus_fromExceptionCode(EX_UNSUPPORTED_OPERATION));
 }
 
-ndk::ScopedAStatus Vibrator::getResonantFrequency(float* resonantFreqHz __unused) {
-    return ndk::ScopedAStatus(AStatus_fromExceptionCode(EX_UNSUPPORTED_OPERATION));
+ndk::ScopedAStatus Vibrator::getResonantFrequency(float* resonantFreqHz) {
+    return pImpl->getResonantFrequency(resonantFreqHz);
 }
 
 ndk::ScopedAStatus Vibrator::getQFactor(float* qFactor __unused) {

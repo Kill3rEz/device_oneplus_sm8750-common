@@ -28,10 +28,12 @@
 
 #define LOG_TAG "vendor.qti.vibratorOL"
 
+#include <cutils/properties.h>
 #include <dirent.h>
 #include <inttypes.h>
 #include <linux/input.h>
 #include <log/log.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <bits/epoll_event.h>
@@ -595,6 +597,7 @@ ndk::ScopedAStatus VibratorOL::getCapabilities(int32_t* _aidl_return) {
         *_aidl_return |= IVibrator::CAP_EXTERNAL_CONTROL;
 
     *_aidl_return |= IVibrator::CAP_COMPOSE_PWLE_EFFECTS;
+    *_aidl_return |= IVibrator::CAP_GET_RESONANT_FREQUENCY;
 
     ALOGD("QTI Vibrator reporting capabilities: %d", *_aidl_return);
     return ndk::ScopedAStatus::ok();
@@ -1016,8 +1019,16 @@ ndk::ScopedAStatus VibratorOL::alwaysOnDisable(int32_t id __unused) {
     return ndk::ScopedAStatus(AStatus_fromExceptionCode(EX_UNSUPPORTED_OPERATION));
 }
 
-ndk::ScopedAStatus VibratorOL::getResonantFrequency(float *resonantFreqHz __unused) {
-    return ndk::ScopedAStatus(AStatus_fromExceptionCode(EX_UNSUPPORTED_OPERATION));
+ndk::ScopedAStatus VibratorOL::getResonantFrequency(float *resonantFreqHz) {
+    // dodge/23821 LRA is qcom,lra-period-us = 7692 (~130 Hz). Override per
+    // device with ro.vendor.vibrator.lra_freq_hz if the period differs.
+    char buf[PROPERTY_VALUE_MAX];
+    property_get("ro.vendor.vibrator.lra_freq_hz", buf, "130");
+    float hz = strtof(buf, nullptr);
+    if (hz <= 0.0f)
+        hz = 130.0f;
+    *resonantFreqHz = hz;
+    return ndk::ScopedAStatus::ok();
 }
 
 ndk::ScopedAStatus VibratorOL::getQFactor(float *qFactor __unused) {
