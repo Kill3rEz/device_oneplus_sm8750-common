@@ -373,19 +373,19 @@
     {
       "PowerHint": "INTERACTION_FLOORS",
       "Node": "CPUBWMinFreq",
-      "Duration": 500,
+      "Duration": 300,
       "Value": "1555000"
     },
     {
       "PowerHint": "INTERACTION_FLOORS",
       "Node": "LLCCBWMinFreq",
-      "Duration": 500,
+      "Duration": 300,
       "Value": "600000"
     },
     {
       "PowerHint": "INTERACTION_FLOORS",
       "Node": "GPUMinFreq",
-      "Duration": 500,
+      "Duration": 300,
       "Value": "525000000"
     },
     {
@@ -547,25 +547,25 @@
     {
       "PowerHint": "DISPLAY_UPDATE_IMMINENT",
       "Node": "UclampTAMin",
-      "Duration": 120,
+      "Duration": 50,
       "Value": "30"
     },
     {
       "PowerHint": "DISPLAY_UPDATE_IMMINENT",
       "Node": "UclampFGMin",
-      "Duration": 120,
+      "Duration": 50,
       "Value": "30"
     },
     {
       "PowerHint": "DISPLAY_UPDATE_IMMINENT",
       "Node": "UclampTALatency",
-      "Duration": 120,
+      "Duration": 50,
       "Value": "1"
     },
     {
       "PowerHint": "DISPLAY_UPDATE_IMMINENT",
       "Node": "UclampFGLatency",
-      "Duration": 120,
+      "Duration": 50,
       "Value": "1"
     },
     {
@@ -616,6 +616,8 @@
       "SamplingWindow_D": 1,
       "UclampMin_On": true,
       "UclampMin_Init": 100,
+      "UclampMin_LoadUp": 200,
+      "UclampMin_LoadReset": 300,
       "UclampMin_High": 384,
       "UclampMin_Low": 0,
       "ReportingRateLimitNs": 166666660,
