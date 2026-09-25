@@ -98,10 +98,26 @@ BOARD_KERNEL_IMAGE_NAME := Image
 TARGET_KERNEL_SOURCE := kernel/oneplus/sm8750
 
 TARGET_KERNEL_ADDITIONAL_FLAGS := CONFIG_OPLUS_DEVICE_DTBS=y
-TARGET_KERNEL_CONFIG := \
-    gki_defconfig \
-    vendor/sun_perf.config \
-    vendor/oplus/sun_perf.config
+# PenguinOS: single PRE-MERGED defconfig, NOT the gki_defconfig + fragment list.
+# make-kernel-config merges fragments in a multi-step shell recipe (cp; olddefconfig;
+# merge_config.sh; olddefconfig; ...). Under siso's concurrent local execution that recipe
+# intermittently loses the fragment merges, yielding a gki-only .config (ARCH_SUN unset,
+# MODULE_SIG_ALL on) -> no SoC/display support, module-sign failure, get_project undefined,
+# bootloop. arch/arm64/configs/vendor/dodge_defconfig is the fragments pre-merged offline
+# (gki + sun_perf + oplus/sun_perf via merge_config.sh + savedefconfig), so the recipe runs a
+# single deterministic 'cp dodge_defconfig .config; olddefconfig' with no merge step.
+TARGET_KERNEL_CONFIG := vendor/dodge_defconfig
+
+# PenguinOS: the QCOM camera-kernel techpack Makefile writes a build-stamp header
+# (cam_generated_h, from $(shell date/whoami/uname)) into its OWN source dir, which the build
+# sandboxes read-only -> "cannot create cam_generated_h: Read-only file system". It's an upstream
+# Makefile and camera_main.c #includes "cam_generated_h" relative to the source dir, so it can't
+# simply be redirected to out/. The targeted BUILD_BROKEN_SRC_DIR_RW_ALLOWLIST is NOT usable here:
+# it makes nsjail bind-mount each allowed subtree RW, and in this (WSL2) environment nsjail can't
+# create the mount points under /run/user/1000/nsjail/root ("mkdir('kernel'): Permission denied"),
+# so soong bootstrap dies. Instead mark the whole source tree writable (disables the RO-source
+# sandbox, no per-path RW mounts) — matches how the Axion tree (unsandboxed) builds this module.
+BUILD_BROKEN_SRC_DIR_IS_WRITABLE := true
 
 # Kernel modules
 BOARD_SYSTEM_KERNEL_MODULES_LOAD := $(strip $(shell sed 's/#.*$$//;/^$$/d' $(COMMON_PATH)/modules.load.system_dlkm))
@@ -278,6 +294,19 @@ WIFI_HIDL_FEATURE_AWARE := true
 WIFI_HIDL_FEATURE_DUAL_INTERFACE := true
 WIFI_HIDL_UNIFIED_SUPPLICANT_SERVICE_RC_ENTRY := true
 WPA_SUPPLICANT_VERSION := VER_0_8_X
+
+# Kernel — build kernel/oneplus/sm8750 IN-TREE via vendor/lineage/build/tasks/kernel.mk,
+# exactly like the Axion reference (which boots). Axion has no kernelscripts / kernel-platform;
+# PenguinOS does (from AOSPA's device/qcom), so both QCOM kernel builders must be made inert:
+#   - TARGET_USES_KERNEL_PLATFORM := false (set in aospa_dodge.mk, product phase) neutralises
+#     device/qcom/common/dlkm/kernel-platform.mk (which otherwise demands a prebuilt at
+#     device/qcom/sun-kernel/ -> "have you compiled kernel?").
+#   - TARGET_KERNEL_LINEAGE_ONLY := true makes device/qcom/kernelscripts a no-op so kernel.mk
+#     is the sole builder (builds base + ext techpack modules + vendor_boot ramdisk).
+# Clang: AOSPA doesn't populate LLVM_AOSP_PREBUILTS_VERSION (BoardConfigKernel's fallback), so
+# pin the SAME clang Axion uses (r563880c) or TARGET_KERNEL_CLANG_PATH ends without a version dir.
+TARGET_KERNEL_LINEAGE_ONLY := true
+TARGET_KERNEL_CLANG_VERSION := r563880c
 
 # Include the proprietary files BoardConfig.
 include vendor/oneplus/sm8750-common/BoardConfigVendor.mk

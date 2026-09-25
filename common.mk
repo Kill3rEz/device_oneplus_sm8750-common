@@ -64,7 +64,15 @@ PRODUCT_PACKAGES += \
     libqcomvoiceprocessing \
     libsoundtriggerhal.qti \
     libvolumelistener \
-    qtiaudiohalvendorextn
+    qtiaudiohalvendorextn \
+    libaudiohalvendorextn
+
+# PenguinOS: the prebuilt /vendor/lib64/hw/libaudioeffecthal.qti.so (DISABLE_DEPS, mandatory in
+# vendor_audio_interfaces.xml) links android.hardware.audio.effect-V3-ndk. On A16 V3 was the current
+# version and got pulled in by the source effects; on A17 they link V4, so V3 must be installed
+# explicitly or audiohalservice.qti never registers IModule/IConfig -> boot hangs in StartAudioService.
+PRODUCT_PACKAGES += \
+    android.hardware.audio.effect-V3-ndk.vendor
 
 PRODUCT_PACKAGES += \
     libbundleaidl \
@@ -295,6 +303,21 @@ PRODUCT_PACKAGES += \
 
 $(call soong_config_set_bool,OPLUS_LINEAGE_LIVEDISPLAY_HAL,ENABLE_SE,false)
 
+# PenguinOS: select composer3 V3 (v3_3 = V3 + AIQE) for the SM8750 display HAL.
+# The build links android.hardware.graphics.composer3-V3 (A17), whose
+# IComposerClient adds getDisplayConfigurations()/notifyExpectedPresent(); those
+# are only compiled in when COMPOSER3_V3 is defined, which the qtidisplay
+# composer_version=v3_3 case provides (code + composer3-V3-ndk + v3 VINTF xml).
+# QCOM's display-product.mk only sets v3_3 up to A15 and its qtidisplay namespace
+# isn't inherited here, so set it explicitly.
+$(call soong_config_set,qtidisplay,composer_version,v3_3)
+
+# mapper_ext gates QtiMapperExtensions2.cpp (which defines IQtiMapperExt_loadIMapperExt)
+# into mapper.qti. QCOM's display-product.mk defaults it to true (A15+), but that
+# namespace file isn't inherited here, so mapper.qti ships without the extension
+# symbol and vendor prebuilts (e.g. libqcodec2_utils) fail to resolve it. Enable it.
+$(call soong_config_set,qtidisplay,mapper_ext,true)
+
 # Logging
 SPAMMY_LOG_TAGS := \
     AAL \
@@ -504,6 +527,17 @@ PRODUCT_COPY_FILES += \
     $(AUDIO_HAL_DIR)/configs/common/codec2/service/1.0/c2audio.vendor.base-arm64.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/c2audio.vendor.base-arm64.policy \
     $(AUDIO_HAL_DIR)/configs/common/codec2/service/1.0/c2audio.vendor.ext-arm64.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/c2audio.vendor.ext-arm64.policy
 
+# PenguinOS: AOSPA/QTI builds the dynamic mediaserver (TARGET_DYNAMIC_64_32_MEDIASERVER,
+# device/qcom/common/common.mk): mediaserver_dynamic.rc imports
+# mediaserver.64bit_${ro.mediaserver.64b.enable:-false}.rc. dodge is 64-bit only, so only
+# mediaserver64 is installed; without this prop init picks the 32-bit variant
+# (/system/bin/mediaserver32, absent) -> no media.player / media.resource_manager -> the
+# setup wizard blocks waiting for media.player (black screen after boot). AOSPA sets this in
+# device/qcom/common/vendor/media/qti-media.mk, which dodge doesn't include (no QTI "media"
+# component).
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.mediaserver.64b.enable=true
+
 # Memtrack
 PRODUCT_PACKAGES += \
     vendor.qti.hardware.memtrack-service
@@ -555,17 +589,25 @@ PRODUCT_PACKAGES += \
 endif
 
 # Partitions
-PRODUCT_PACKAGES += \
-    vendor_bt_firmware_mountpoint \
-    vendor_dsp_mountpoint \
-    vendor_firmware_mnt_mountpoint
+# NB: the mount-point dirs (firmware_mnt, bt_firmware, dsp) are already created
+# — with their /firmware-style symlinks — by QCOM's legacy AndroidBoardCommon.mk,
+# which AOSPA always pulls in via device/qcom/common/Android.mk. Keeping the
+# soong mkdir modules here (a Lineage-base habit) produced duplicate make rules
+# for those dirs. Dropped; the legacy path handles them.
 
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
 # Power
 PRODUCT_PACKAGES += \
     android.hardware.power-service.lineage-libperfmgr \
+    libperfmgr.vendor \
     libqti-perfd-client
+
+# NOTE: The conflicting QCOM power HAL (android.hardware.power-service + power-v6.xml)
+# is prevented at the source via TARGET_PROVIDES_POWERHAL := true in
+# device/oneplus/dodge/aospa_dodge.mk, which makes device/qcom/common/common.mk skip
+# inheriting vendor/qcom/opensource/power/power-vendor-product.mk. PRODUCT_PACKAGES_REMOVE
+# is NOT honored by this build tree, so it cannot be used here.
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
@@ -621,9 +663,13 @@ PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \
     hardware/google/interfaces \
     hardware/google/pixel \
+    hardware/google/pixel/power-libperfmgr \
+    hardware/google/pixel/kernel_headers \
     hardware/lineage/interfaces/power-libperfmgr \
     hardware/oplus \
-    hardware/qcom-caf/common/libqti-perfd-client
+    hardware/qcom-caf/common/libqti-perfd-client \
+    hardware/qcom-caf/sm8750 \
+    hardware/qcom/wlan/qcwcn/wpa_supplicant_8_lib
 
 # Storage
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
@@ -648,8 +694,9 @@ PRODUCT_PACKAGES += \
     qti_telephony_utils_prd.xml \
     telephony-ext
 
-PRODUCT_BOOT_JARS += \
-    telephony-ext
+# NB: telephony-ext is already added to PRODUCT_BOOT_JARS by AOSPA's
+# aospa-target.mk; re-adding it here (as the Lineage-based osm tree does)
+# produces a duplicate boot-telephony-ext.art rule. Dropped.
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.telephony.cdma.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.cdma.xml \
@@ -723,7 +770,13 @@ PRODUCT_COPY_FILES += \
 endif
 
 # VINTF
+# The device ships the LineageOS vendor HALs (livedisplay, powershare, touch) from
+# hardware/lineage/interfaces. AOSPA's framework compatibility matrix doesn't know
+# them, so VINTF fails ("in device manifest but not in framework compatibility
+# matrix"). Add LineageOS' own framework matrix, which declares all vendor.lineage.*
+# HAL interfaces, so the device manifest stays compatible.
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
+    hardware/lineage/interfaces/compatibility_matrices/compatibility_matrix.lineage.xml \
     hardware/oplus/vintf/device_framework_matrix.xml \
     hardware/qcom-caf/common/vendor_framework_compatibility_matrix.xml
 DEVICE_MATRIX_FILE := hardware/qcom-caf/common/compatibility_matrix_aidl.xml
