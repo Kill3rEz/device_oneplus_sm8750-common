@@ -98,6 +98,9 @@ blob_fixups: blob_fixups_user_type = {
     'vendor/etc/seccomp_policy/gnss@2.0-qsap-location.policy': blob_fixup()
         .add_line_if_missing('sched_get_priority_min: 1')
         .add_line_if_missing('sched_get_priority_max: 1'),
+    # syshealthmon-service SIGSYS-loops without clock_gettime as well.
+    'vendor/etc/seccomp_policy/syshealthmon.policy': blob_fixup()
+        .add_line_if_missing('clock_gettime: 1'),
     (
         'vendor/lib64/libVoiceSdk.so',
         'vendor/lib64/libcapiv2uvvendor.so',
