@@ -17,7 +17,7 @@
         "3532800",
         "1363200",
         "960000",
-        "556800"
+        "384000"
       ],
       "ResetOnInit": true
     },
@@ -83,9 +83,10 @@
       "Values": [
         "50",
         "30",
+        "10",
         "0"
       ],
-      "DefaultIndex": 2,
+      "DefaultIndex": 3,
       "ResetOnInit": true
     },
     {
@@ -103,9 +104,10 @@
       "Values": [
         "50",
         "30",
+        "10",
         "0"
       ],
-      "DefaultIndex": 2,
+      "DefaultIndex": 3,
       "ResetOnInit": true
     },
     {
@@ -122,6 +124,7 @@
       "Path": "/proc/sys/walt/sched_busy_hyst_ns",
       "Values": [
         "99000000",
+        "15000000",
         "3000000",
         "0"
       ],
@@ -180,6 +183,7 @@
       "Path": "/sys/class/kgsl/kgsl-3d0/devfreq/min_freq",
       "Values": [
         "525000000",
+        "342000000",
         "160000000"
       ],
       "ResetOnInit": true
@@ -297,13 +301,13 @@
       "PowerHint": "INTERACTION",
       "Node": "UclampTAMin",
       "Duration": 0,
-      "Value": "30"
+      "Value": "10"
     },
     {
       "PowerHint": "INTERACTION",
       "Node": "UclampFGMin",
       "Duration": 0,
-      "Value": "30"
+      "Value": "10"
     },
     {
       "PowerHint": "INTERACTION",
@@ -321,54 +325,24 @@
       "PowerHint": "INTERACTION",
       "Node": "SchedBusyHystNs",
       "Duration": 0,
-      "Value": "99000000"
+      "Value": "15000000"
     },
     {
       "PowerHint": "INTERACTION",
       "Node": "SchedBusyHystEnableCPUs",
       "Duration": 0,
-      "Value": "255"
-    },
-    {
-      "PowerHint": "INTERACTION",
-      "Node": "SchedMinTaskUtilForBoost",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "INTERACTION",
-      "Node": "SchedMinTaskUtilForColoc",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "INTERACTION",
-      "Node": "SchedMinTaskUtilForUclamp",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "INTERACTION",
-      "Node": "LLCCBWHystTriggerCount",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "INTERACTION",
-      "Node": "LLCCBWHystLength",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "INTERACTION",
-      "Node": "LLCCBWHistMemory",
-      "Duration": 0,
-      "Value": "0"
+      "Value": "63"
     },
     {
       "PowerHint": "INTERACTION",
       "Type": "DoHint",
       "Value": "INTERACTION_FLOORS"
+    },
+    {
+      "PowerHint": "INTERACTION_FLOORS",
+      "Node": "CPULittleClusterMinFreq",
+      "Duration": 300,
+      "Value": "960000"
     },
     {
       "PowerHint": "INTERACTION_FLOORS",
@@ -386,13 +360,13 @@
       "PowerHint": "INTERACTION_FLOORS",
       "Node": "GPUMinFreq",
       "Duration": 300,
-      "Value": "525000000"
+      "Value": "342000000"
     },
     {
       "PowerHint": "INTERACTIVE",
       "Node": "CPULittleClusterUpRateLimit",
       "Duration": 0,
-      "Value": "500"
+      "Value": "2000"
     },
     {
       "PowerHint": "INTERACTIVE",
@@ -404,37 +378,37 @@
       "PowerHint": "INTERACTIVE",
       "Node": "CPUBigClusterUpRateLimit",
       "Duration": 0,
-      "Value": "500"
+      "Value": "2000"
     },
     {
       "PowerHint": "INTERACTIVE",
       "Node": "CPUBigClusterDownRateLimit",
       "Duration": 0,
-      "Value": "10000"
+      "Value": "2000"
     },
     {
       "PowerHint": "INTERACTIVE",
       "Node": "SchedBusyHystNs",
       "Duration": 0,
-      "Value": "3000000"
+      "Value": "0"
     },
     {
       "PowerHint": "INTERACTIVE",
       "Node": "SchedBusyHystEnableCPUs",
       "Duration": 0,
-      "Value": "63"
+      "Value": "0"
     },
     {
       "PowerHint": "LAUNCH",
       "Node": "CPUBigClusterMinFreq",
       "Duration": 1500,
-      "Value": "3513600"
+      "Value": "1689600"
     },
     {
       "PowerHint": "LAUNCH",
       "Node": "CPULittleClusterMinFreq",
       "Duration": 1500,
-      "Value": "3532800"
+      "Value": "1363200"
     },
     {
       "PowerHint": "LAUNCH",
@@ -548,13 +522,13 @@
       "PowerHint": "DISPLAY_UPDATE_IMMINENT",
       "Node": "UclampTAMin",
       "Duration": 50,
-      "Value": "30"
+      "Value": "10"
     },
     {
       "PowerHint": "DISPLAY_UPDATE_IMMINENT",
       "Node": "UclampFGMin",
       "Duration": 50,
-      "Value": "30"
+      "Value": "10"
     },
     {
       "PowerHint": "DISPLAY_UPDATE_IMMINENT",
@@ -567,6 +541,12 @@
       "Node": "UclampFGLatency",
       "Duration": 50,
       "Value": "1"
+    },
+    {
+      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
+      "Node": "GPUMinFreq",
+      "Duration": 50,
+      "Value": "342000000"
     },
     {
       "PowerHint": "EXPENSIVE_RENDERING",

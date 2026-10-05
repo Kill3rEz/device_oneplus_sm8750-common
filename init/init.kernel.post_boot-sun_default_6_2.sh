@@ -125,12 +125,14 @@ if [ -d /proc/sys/walt ]; then
 	echo 0 > /proc/sys/walt/sched_boost
 
 	# configure input boost settings
+	# cpu0 only: boosting cpu1 as well just doubles cluster0 energy for
+	# the same OPP. 250 ms covers a tap without riding a fling.
 	if [ $rev == "1.0" ] || [ $rev == "1.1" ]; then
 		echo 864000 0 0 0 0 0 0 0 > /proc/sys/walt/input_boost/input_boost_freq
 	else
-		echo 1363200 1363200 0 0 0 0 0 0 > /proc/sys/walt/input_boost/input_boost_freq
+		echo 1363200 0 0 0 0 0 0 0 > /proc/sys/walt/input_boost/input_boost_freq
 	fi
-	echo 500 > /proc/sys/walt/input_boost/input_boost_ms
+	echo 250 > /proc/sys/walt/input_boost/input_boost_ms
 
 	echo "walt" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
 	echo "walt" > /sys/devices/system/cpu/cpufreq/policy6/scaling_governor
@@ -143,16 +145,18 @@ if [ -d /proc/sys/walt ]; then
 	echo 1 > /sys/devices/system/cpu/cpufreq/policy0/walt/pl
 	echo 1 > /sys/devices/system/cpu/cpufreq/policy6/walt/pl
 
+	# 1344000/2380800 are not sun OPPs (clamp ~1363/2246). Jump to the next
+	# real step so WALT does not sit in the 1.4–2.4 GHz band on a fling.
 	if [ $rev == "1.0" ] || [ $rev == "1.1" ]; then
 		echo 787200 > /sys/devices/system/cpu/cpufreq/policy0/walt/rtg_boost_freq
 		echo 902400 > /sys/devices/system/cpu/cpufreq/policy6/walt/rtg_boost_freq
-		echo 1344000 > /sys/devices/system/cpu/cpufreq/policy0/walt/hispeed_freq
-		echo 2380800 > /sys/devices/system/cpu/cpufreq/policy6/walt/hispeed_freq
+		echo 1152000 > /sys/devices/system/cpu/cpufreq/policy0/walt/hispeed_freq
+		echo 1689600 > /sys/devices/system/cpu/cpufreq/policy6/walt/hispeed_freq
 	else
 		echo 787200 > /sys/devices/system/cpu/cpufreq/policy0/walt/rtg_boost_freq
 		echo 902400 > /sys/devices/system/cpu/cpufreq/policy6/walt/rtg_boost_freq
-		echo 1344000 > /sys/devices/system/cpu/cpufreq/policy0/walt/hispeed_freq
-		echo 2380800 > /sys/devices/system/cpu/cpufreq/policy6/walt/hispeed_freq
+		echo 1152000 > /sys/devices/system/cpu/cpufreq/policy0/walt/hispeed_freq
+		echo 1689600 > /sys/devices/system/cpu/cpufreq/policy6/walt/hispeed_freq
 	fi
 else
 	echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
@@ -160,12 +164,14 @@ else
 	echo 1 > /proc/sys/kernel/sched_pelt_multiplier
 fi
 
+# 537600/844800 are not OPPs on sun (kernel clamps to 556800/1017600).
+# 384000 is a real cluster0 floor; primes already idle at hardware min.
 if [ $rev == "1.0" ] || [ $rev == "1.1" ]; then
-	echo 537600 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
-	echo 844800 > /sys/devices/system/cpu/cpufreq/policy6/scaling_min_freq
+	echo 384000 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
+	echo 1017600 > /sys/devices/system/cpu/cpufreq/policy6/scaling_min_freq
 else
-	echo 537600 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
-	echo 844800 > /sys/devices/system/cpu/cpufreq/policy6/scaling_min_freq
+	echo 384000 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
+	echo 1017600 > /sys/devices/system/cpu/cpufreq/policy6/scaling_min_freq
 fi
 
 # Reset the RT boost, which is 1024 (max) by default.
