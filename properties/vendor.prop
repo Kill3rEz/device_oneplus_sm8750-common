@@ -1,3 +1,13 @@
+# ART
+dalvik.vm.background-dex2oat-cpu-set=0,1,2,3,4,5
+dalvik.vm.background-dex2oat-threads=4
+dalvik.vm.boot-dex2oat-cpu-set=0,1,2,3,4,5,6,7
+dalvik.vm.boot-dex2oat-threads=8
+dalvik.vm.dex2oat-cpu-set=0,1,2,3,4,5,6,7
+dalvik.vm.dex2oat-threads=8
+dalvik.vm.restore-dex2oat-cpu-set=0,1,2,3,4,5,6,7
+dalvik.vm.restore-dex2oat-threads=8
+
 # Audio
 aaudio.hw_burst_min_usec=2000
 aaudio.mmap_exclusive_policy=2
