@@ -373,7 +373,7 @@ $(call soong_config_set_bool,recovery,target_recovery_uses_qti_drm,true)
 PRODUCT_PACKAGES += \
     android.hardware.sensors-service.oplus-multihal \
     sensors.dynamic_sensor_hal \
-    sensors.fusionlight
+    sensors.qsh_wrapper
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf
