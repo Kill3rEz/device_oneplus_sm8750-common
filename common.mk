@@ -258,6 +258,8 @@ PRODUCT_PACKAGES += \
     init.qcom.recovery.rc \
     init.qcom.sh \
     init.target.rc \
+    init.rr-rkp-v1.rc \
+    rr-rkp-v1 \
     ueventd.oplus.rc \
     ueventd.qcom.rc
 

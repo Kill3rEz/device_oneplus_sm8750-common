@@ -67,6 +67,12 @@ blob_fixups: blob_fixups_user_type = {
         .add_line_if_missing('lseek: 1'),
     'system_ext/lib64/libwfdservice.so': blob_fixup()
         .replace_needed('android.media.audio.common.types-V4-cpp.so', 'android.media.audio.common.types-V5-cpp.so'),
+    # IRemotelyProvisionedComponent::descriptor moved from keymint-V2-ndk into rkp-V3-ndk.
+    (
+        'vendor/bin/hw/android.hardware.security.keymint-service-qti',
+        'vendor/lib64/libqtikeymint.so',
+    ): blob_fixup()
+        .add_needed('android.hardware.security.rkp-V3-ndk.so'),
     'vendor/bin/system_dlkm_modprobe.sh': blob_fixup()
         .regex_replace(r'.*\bzram or zsmalloc\b.*\n', '')
         .regex_replace(r'-e "zram" -e "zsmalloc"', ''),

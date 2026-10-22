@@ -1,0 +1,18 @@
+type rr_rkp, domain;
+type rr_rkp_exec, exec_type, vendor_file_type, file_type;
+
+init_daemon_domain(rr_rkp)
+
+type rr_rkp_socket, file_type, mlstrustedobject;
+
+# Same TEE nodes the KeyMint HAL uses for KeymasterUtils::send_cmd.
+allow rr_rkp tee_device:chr_file rw_file_perms;
+allow rr_rkp vendor_dmabuf_qseecom_heap_device:chr_file r_file_perms;
+
+get_prop(rr_rkp, vendor_tee_listener_prop)
+get_prop(rr_rkp, vendor_disable_spu_prop)
+
+# Inherited init socket. The peer label is this domain.
+allow rr_rkp rr_rkp_socket:sock_file write;
+unix_socket_connect(system_server, rr_rkp, rr_rkp)
+allow system_server rr_rkp_socket:sock_file getattr;
