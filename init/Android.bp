@@ -97,3 +97,16 @@ sh_binary {
     src: "init.qcom.sh",
     vendor: true,
 }
+
+sh_binary {
+    name: "rr-vbmeta-digest-sun.sh",
+    src: "rr-vbmeta-digest.sh",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "init.rr-vbmeta-digest-sun.rc",
+    src: "init.rr-vbmeta-digest.rc",
+    sub_dir: "init",
+    vendor: true,
+}
