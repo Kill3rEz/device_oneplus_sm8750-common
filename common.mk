@@ -259,12 +259,16 @@ PRODUCT_PACKAGES += \
     init.qcom.recovery.rc \
     init.qcom.sh \
     init.target.rc \
-    init.rr-vbmeta-digest-sun.rc \
-    rr-vbmeta-digest-sun.sh \
-    init.rr-rkp-v1.rc \
-    rr-rkp-v1 \
     ueventd.oplus.rc \
     ueventd.qcom.rc
+
+ifeq ($(WITH_DUCK_RKP),true)
+PRODUCT_PACKAGES += \
+    init.rr-rkp-v1.rc \
+    init.rr-vbmeta-digest-sun.rc \
+    rr-rkp-v1 \
+    rr-vbmeta-digest-sun.sh
+endif
 
 $(call soong_config_set,libinit,vendor_init_lib,//$(LOCAL_PATH):libinit_oplus)
 
