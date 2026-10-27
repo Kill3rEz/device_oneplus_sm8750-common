@@ -239,6 +239,7 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/oplus-hiddenapi-package-allowlist.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/oplus-hiddenapi-package-allowlist.xml \
+    $(LOCAL_PATH)/configs/preinstalled-packages-oplus-ir.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/preinstalled-packages-oplus-ir.xml \
     $(LOCAL_PATH)/configs/permissions/default-permissions-oplus-melody.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/default-permissions/default-permissions-oplus-melody.xml
 
 PRODUCT_COPY_FILES += \
