@@ -651,8 +651,6 @@ PRODUCT_SHIPPING_API_LEVEL := 35
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \
-    hardware/google/interfaces \
-    hardware/google/pixel \
     hardware/google/pixel/kernel_headers \
     hardware/oplus \
     hardware/qcom-caf/sm8750 \
