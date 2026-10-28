@@ -20,6 +20,10 @@ on post-fs-data
     # Multimedia feedback
     chown media media /proc/mm_fb
 
+    # Camera deferred captures and motion photos
+    mkdir /data/vendor/camera_process 0777 camera camera
+    restorecon_recursive /data/vendor/camera_process
+
 on property:ro.boot.prjname=*
     # Display
     setprop ro.separate.soft ${ro.boot.prjname}
