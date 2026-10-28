@@ -20,9 +20,11 @@ on post-fs-data
     # Multimedia feedback
     chown media media /proc/mm_fb
 
-    # Camera deferred captures and motion photos
+    # Camera deferred captures, motion photos and logs
     mkdir /data/vendor/camera_process 0777 camera camera
     restorecon_recursive /data/vendor/camera_process
+    mkdir /data/vendor/cam_alog 0777 camera camera
+    restorecon_recursive /data/vendor/cam_alog
 
 on property:ro.boot.prjname=*
     # Display
