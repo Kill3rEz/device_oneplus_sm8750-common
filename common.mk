@@ -598,34 +598,9 @@ endif
 
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
-# Perf
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/perf/perfconfigstore.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/perfconfigstore.xml \
-    $(LOCAL_PATH)/configs/perf/qapeconfigstore.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/qapeconfigstore.xml
-
-# Power
-PRODUCT_PACKAGES += \
-    android.hardware.power-service.lineage-libperfmgr \
-    libperfmgr.vendor \
-    libqti-perfd-client
-
-# NOTE: The conflicting QCOM power HAL (android.hardware.power-service + power-v6.xml)
-# is prevented at the source via TARGET_PROVIDES_POWERHAL := true in
-# device/oneplus/dodge/aospa_dodge.mk, which makes device/qcom/common/common.mk skip
-# inheriting vendor/qcom/opensource/power/power-vendor-product.mk. PRODUCT_PACKAGES_REMOVE
-# is NOT honored by this build tree, so it cannot be used here.
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
-
-# Dodge has no DRM idle_state node, so InteractionHandler falls back to a
-# timed INTERACTION hold. Pixel defaults (min 1400 / max 5650) keep the 8
-# Elite boosted for seconds after every tap. 200 ms covers a tap; 800 ms
-# still covers a fling coast, then drop.
-PRODUCT_VENDOR_PROPERTIES += \
-    vendor.powerhal.interaction.min=200 \
-    vendor.powerhal.interaction.max=800 \
-    vendor.powerhal.interaction.offset=100
+# QTI components
+TARGET_COMMON_QTI_COMPONENTS += \
+    perf
 
 # QSPA
 PRODUCT_PACKAGES += \
@@ -678,11 +653,8 @@ PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \
     hardware/google/interfaces \
     hardware/google/pixel \
-    hardware/google/pixel/power-libperfmgr \
     hardware/google/pixel/kernel_headers \
-    hardware/lineage/interfaces/power-libperfmgr \
     hardware/oplus \
-    hardware/qcom-caf/common/libqti-perfd-client \
     hardware/qcom-caf/sm8750 \
     hardware/qcom/wlan/qcwcn/wpa_supplicant_8_lib
 

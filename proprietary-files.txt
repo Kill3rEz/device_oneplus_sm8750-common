@@ -515,7 +515,6 @@ vendor/lib64/qti.video.utils.videobufferlayout.so
 vendor/lib64/vendor.qti.hardware.qconfig-V1-ndk.so
 
 # Memory
-vendor/lib64/vendor.qti.memory.pasrmanager-V1-ndk.so
 
 # Misc
 odm/etc/init/init.oppo.reserve.rc
@@ -671,10 +670,6 @@ vendor/lib64/libsmemlog.so
 # QSPA
 system_ext/etc/init/qspa_system.rc
 system_ext/etc/qspa/qspa_default.rc
-
-# QSPM
-vendor/lib64/libqspm-mem-utils-vendor.so
-vendor/lib64/vendor.qti.qspmhal-V1-ndk.so
 
 # QSEECOM
 vendor/bin/hw/vendor.qti.hardware.qseecom@1.0-service
@@ -849,7 +844,6 @@ vendor/etc/init/vendor.qti.tftp.rc
 vendor/bin/thermal-engine-v2
 vendor/etc/init/init_thermal-engine-v2.rc
 vendor/etc/thermal-engine.conf
-vendor/lib64/liblmthermallistner.so
 vendor/lib64/libthermalclient.so
 
 # Time services
