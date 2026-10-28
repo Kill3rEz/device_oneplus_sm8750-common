@@ -365,6 +365,12 @@ on post-fs-data
 
     mkdir /data/vendor/nfc 0770 nfc nfc
 
+    mkdir /data/vendor/perfd 0770 root system
+    chmod 2770 /data/vendor/perfd
+    rm /data/vendor/perfd/default_values
+
+    mkdir /data/vendor/iop 0700 root system
+
     # Mark the copy complete flag to not completed
     write /data/vendor/radio/copy_complete 0
     chown radio radio /data/vendor/radio/copy_complete
