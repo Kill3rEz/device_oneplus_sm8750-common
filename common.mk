@@ -297,12 +297,6 @@ PRODUCT_PACKAGES += \
 
 $(call soong_config_set,lineage_health,charging_control_charging_path,/sys/class/oplus_chg/battery/mmi_charging_enable)
 
-# LiveDisplay
-PRODUCT_PACKAGES += \
-    vendor.lineage.livedisplay-service.oplus
-
-$(call soong_config_set_bool,OPLUS_LINEAGE_LIVEDISPLAY_HAL,ENABLE_SE,false)
-
 # PenguinOS: select composer3 V3 (v3_3 = V3 + AIQE) for the SM8750 display HAL.
 # The build links android.hardware.graphics.composer3-V3 (A17), whose
 # IComposerClient adds getDisplayConfigurations()/notifyExpectedPresent(); those
@@ -700,15 +694,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.thermal-service.qti
 
-# Touch
-ifneq ($(TARGET_IS_TABLET),true)
-PRODUCT_PACKAGES += \
-    vendor.lineage.touch-service.oplus
-
-$(call soong_config_set,OPLUS_LINEAGE_TOUCH_HAL,INCLUDE_DIR,$(LOCAL_PATH)/touch/include)
-$(call soong_config_set_bool,OPLUS_LINEAGE_TOUCH_HAL,USE_OPLUSTOUCH,true)
-endif
-
 # Update engine
 PRODUCT_PACKAGES += \
     update_engine \
@@ -748,13 +733,7 @@ PRODUCT_COPY_FILES += \
 endif
 
 # VINTF
-# The device ships the LineageOS vendor HALs (livedisplay, powershare, touch) from
-# hardware/lineage/interfaces. AOSPA's framework compatibility matrix doesn't know
-# them, so VINTF fails ("in device manifest but not in framework compatibility
-# matrix"). Add LineageOS' own framework matrix, which declares all vendor.lineage.*
-# HAL interfaces, so the device manifest stays compatible.
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
-    hardware/lineage/interfaces/compatibility_matrices/compatibility_matrix.lineage.xml \
     hardware/oplus/vintf/device_framework_matrix.xml \
     hardware/qcom-caf/common/vendor_framework_compatibility_matrix.xml
 DEVICE_MATRIX_FILE := hardware/qcom-caf/common/compatibility_matrix_aidl.xml
