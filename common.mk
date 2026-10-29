@@ -283,8 +283,12 @@ PRODUCT_PACKAGES += \
 
 ifneq ($(TARGET_IS_TABLET),true)
 PRODUCT_PACKAGES += \
-    android.hardware.security.keymint3-service.strongbox.nxp \
-    android.hardware.weaver-service.nxp
+    android.hardware.security.keymint-service.strongbox-nxp \
+    android.hardware.weaver-service.nxp-qti \
+    android.hardware.weaver-service.nxp.xml
+
+PRODUCT_COPY_FILES += \
+    vendor/nxp/opensource/keymaster/keymint/android.hardware.hardware_keystore.jc-strongbox-keymint.nxp.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.hardware_keystore.jc-strongbox-keymint.nxp.xml
 endif
 
 PRODUCT_COPY_FILES += \
