@@ -6,6 +6,7 @@
       "Values": [
         "1785600",
         "2400000",
+        "3532800",
         "9999999"
       ],
       "ResetOnInit": true
@@ -15,6 +16,7 @@
       "Path": "/sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq",
       "Values": [
         "3532800",
+        "1555200",
         "1363200",
         "960000",
         "384000"
@@ -45,6 +47,7 @@
       "Values": [
         "1958400",
         "2649600",
+        "4320000",
         "9999999"
       ],
       "ResetOnInit": true
@@ -54,6 +57,7 @@
       "Path": "/sys/devices/system/cpu/cpufreq/policy6/scaling_min_freq",
       "Values": [
         "3513600",
+        "2246400",
         "1689600",
         "1017600"
       ],
@@ -283,19 +287,19 @@
       "PowerHint": "SUSTAINED_PERFORMANCE",
       "Node": "CPULittleClusterMaxFreq",
       "Duration": 0,
-      "Value": "2400000"
+      "Value": "3532800"
     },
     {
       "PowerHint": "SUSTAINED_PERFORMANCE",
       "Node": "CPUBigClusterMaxFreq",
       "Duration": 0,
-      "Value": "2649600"
+      "Value": "4320000"
     },
     {
       "PowerHint": "SUSTAINED_PERFORMANCE",
       "Node": "GPUMaxFreq",
       "Duration": 0,
-      "Value": "900000000"
+      "Value": "1100000000"
     },
     {
       "PowerHint": "INTERACTION",
@@ -559,6 +563,18 @@
       "Node": "GPUMinFreq",
       "Duration": 0,
       "Value": "525000000"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "CPULittleClusterMinFreq",
+      "Duration": 1000,
+      "Value": "1555200"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "CPUBigClusterMinFreq",
+      "Duration": 1000,
+      "Value": "2246400"
     },
     {
       "PowerHint": "LOW_POWER",

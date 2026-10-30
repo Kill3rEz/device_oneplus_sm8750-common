@@ -119,11 +119,9 @@ on boot
     chown system system /sys/kernel/oplus_display/adfr_config
     chmod 0660 /sys/kernel/oplus_display/adfr_config
 
-on property:vendor.display.lcd_density=560
-   setprop dalvik.vm.heapgrowthlimit 256m
-
-on property:vendor.display.lcd_density=640
-   setprop dalvik.vm.heapgrowthlimit 512m
+# Heap sizes stay in the product dalvik makefile. The 1440p panel sets
+# vendor.display.lcd_density=560, and the old 560 trigger put
+# heapgrowthlimit back to the 6 GB value after product had set 512m.
 
 on init && property:ro.boot.mode=charger
     wait_for_prop vendor.all.modules.ready 1
