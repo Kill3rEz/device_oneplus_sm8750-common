@@ -143,7 +143,9 @@ vendor.gatekeeper.is_security_level_spu=0
 
 # Graphics
 debug.graphics.game_default_frame_rate.disabled=0
-debug.sf.auto_latch_unsignaled=1
+# 0: latch the buffer with its crop. 1 shows the Internet dialog's wifi row
+# outside the card while Done shrinks the dialog back into Quick Settings.
+debug.sf.auto_latch_unsignaled=0
 debug.sf.disable_client_composition_cache=1
 debug.sf.early.app.duration.60=16666666
 debug.sf.early.app.duration=13666666
