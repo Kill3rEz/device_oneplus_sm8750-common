@@ -6,7 +6,6 @@
       "Values": [
         "1785600",
         "2400000",
-        "3532800",
         "9999999"
       ],
       "ResetOnInit": true
@@ -47,7 +46,6 @@
       "Values": [
         "1958400",
         "2649600",
-        "4320000",
         "9999999"
       ],
       "ResetOnInit": true
@@ -287,19 +285,19 @@
       "PowerHint": "SUSTAINED_PERFORMANCE",
       "Node": "CPULittleClusterMaxFreq",
       "Duration": 0,
-      "Value": "3532800"
+      "Value": "2400000"
     },
     {
       "PowerHint": "SUSTAINED_PERFORMANCE",
       "Node": "CPUBigClusterMaxFreq",
       "Duration": 0,
-      "Value": "4320000"
+      "Value": "2649600"
     },
     {
       "PowerHint": "SUSTAINED_PERFORMANCE",
       "Node": "GPUMaxFreq",
       "Duration": 0,
-      "Value": "1100000000"
+      "Value": "900000000"
     },
     {
       "PowerHint": "INTERACTION",
