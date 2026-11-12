@@ -133,15 +133,12 @@ function configure_min_free_kbytes()
 	MemTotal=${MemTotalStr:16:8}
 	let RamSizeGB="( $MemTotal / 1048576 ) + 1"
     # Set the min_free_kbytes to standard kernel value
-	if [ $RamSizeGB -ge 12 ]; then
-		# 12GB, 16GB
+	if [ $RamSizeGB -ge 8 ]; then
+		# 8GB, 12GB, 16GB. The old >=12 branch returned before the
+		# watermark write, so those targets stayed on the kernel default
+		# of 10 and fell into direct reclaim under pressure.
 		MinFreeKbytes=23168
-	elif [ $RamSizeGB -ge 8 ]; then
-		# 8GB
-		MinFreeKbytes=23168
-		WatermarkScale=65
-		echo $WatermarkScale > /proc/sys/vm/watermark_scale_factor
-
+		echo 65 > /proc/sys/vm/watermark_scale_factor
 	elif [ $RamSizeGB -ge 4 ]; then
 		MinFreeKbytes=8192
 	elif [ $RamSizeGB -ge 2 ]; then
@@ -168,6 +165,14 @@ function configure_memory_parameters() {
 	configure_min_free_kbytes
 
 	echo 100 > /proc/sys/vm/swappiness
+
+	# Swap is zram. Reading extra swap pages ahead only lengthens the fault.
+	echo 0 > /proc/sys/vm/page-cluster
+
+	# Keep file cache briefly so an app switch does not immediately refault.
+	if [ -f /sys/kernel/mm/lru_gen/min_ttl_ms ]; then
+		echo 1000 > /sys/kernel/mm/lru_gen/min_ttl_ms
+	fi
 
 	# Disable periodic kcompactd wakeups. THP is off, so huge pages are not required.
 	echo 0 > /proc/sys/vm/compaction_proactiveness

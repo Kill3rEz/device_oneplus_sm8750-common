@@ -143,6 +143,8 @@ vendor.gatekeeper.is_security_level_spu=0
 
 # Graphics
 debug.graphics.game_default_frame_rate.disabled=0
+# powerhint.json AdpfConfig only runs once HWUI opens a hint session.
+debug.hwui.use_hint_manager=true
 # 0: latch the buffer with its crop. 1 shows the Internet dialog's wifi row
 # outside the card while Done shrinks the dialog back into Quick Settings.
 debug.sf.auto_latch_unsignaled=0
