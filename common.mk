@@ -306,6 +306,9 @@ SPAMMY_LOG_TAGS := \
     AdnRecord \
     AdnRecordCache \
     AdnRecordLoader \
+    AgmIpc::Server \
+    AHAL_Module_QTI \
+    AHAL_StreamIn_QTI \
     AirplaneHandler \
     AT \
     APM-KpiMonitor \
@@ -313,6 +316,7 @@ SPAMMY_LOG_TAGS := \
     APM-SessionJ \
     APM-SessionN \
     APM-Subscriber \
+    BatteryDamageDetect \
     C2K_RIL-DATA \
     C2MtkBufferManager \
     C2Store \
@@ -392,6 +396,10 @@ SPAMMY_LOG_TAGS := \
     OplusTouchDaemon \
     OpenGLRenderer \
     OperatorUtils \
+    OttProxy \
+    PAL \
+    PAL_OplusSpeakerAwinic \
+    PAL_OplusSpeakerProtection \
     PKM-Lib \
     PKM-MDM \
     PKM-Monitor \
@@ -407,8 +415,10 @@ SPAMMY_LOG_TAGS := \
     PQ \
     PQ_DS \
     ProxyController \
+    QmiClient \
     QTI PowerHAL \
     RadioManager \
+    RequestManager \
     RFX \
     RfxAction \
     RfxChannelMgr \
@@ -486,6 +496,7 @@ SPAMMY_LOG_TAGS := \
     RtcImsConference \
     RtcImsConfigController \
     SDM \
+    SensorFeature \
     StatsLog \
     synaLib \
     thermal_src \
