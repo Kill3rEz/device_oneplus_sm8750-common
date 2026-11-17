@@ -178,11 +178,6 @@ TARGET_KERNEL_EXT_MODULES += \
 BOARD_USES_QCOM_HARDWARE := true
 TARGET_BOARD_PLATFORM := sun
 
-# Install the stock perfd client instead of the Lineage stub.
-SOONG_CONFIG_NAMESPACES += qti_perfd
-SOONG_CONFIG_qti_perfd += use_stock_client
-SOONG_CONFIG_qti_perfd_use_stock_client := true
-
 # Metadata
 BOARD_USES_METADATA_PARTITION := true
 
